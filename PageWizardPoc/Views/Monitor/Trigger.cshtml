@@ -6,7 +6,7 @@
 
 <p>Trigger page.</p>
 
-@using (Html.BeginForm("Index", null, FormMethod.Get, new { role = "form" }))
+@using (Html.BeginForm("TriggerEdited", "Monitor", FormMethod.Post, new { role = "form" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)

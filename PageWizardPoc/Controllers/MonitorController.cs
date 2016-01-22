@@ -33,19 +33,20 @@ namespace PageWizardPoc.Controllers
                 monitorEditViewModel.EditingTriggerOrAlert = false;
             }
 
-            return View(monitorEditViewModel);
+            return View("Index", monitorEditViewModel);
         }
 
         // POST: Monitor
         [HttpPost]
+       [ValidateAntiForgeryToken]
         public ActionResult Index(MonitorEditViewModel monitorEditViewModel)
         {
             if (monitorEditViewModel.EditingTriggerOrAlert)
             {
                 
-                TempData["monitorEditViewModel"] = monitorEditViewModel;
-                return RedirectToAction("Trigger" );
-                //return Trigger(monitorEditViewModel);
+//                TempData["monitorEditViewModel"] = monitorEditViewModel;
+//                return RedirectToAction("Trigger" );
+                return Trigger(monitorEditViewModel);
             }
 
             ViewBag.Message = "Saved Monitor!";
@@ -55,9 +56,16 @@ namespace PageWizardPoc.Controllers
 
         public ActionResult Trigger(MonitorEditViewModel monitorEditViewModel)
         {
-            monitorEditViewModel = TempData["monitorEditViewModel"] as MonitorEditViewModel;
-            return View(monitorEditViewModel);
+            //monitorEditViewModel = TempData["monitorEditViewModel"] as MonitorEditViewModel;
+            return View("Trigger",monitorEditViewModel);
 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TriggerEdited(MonitorEditViewModel monitorEditViewModel)
+        {
+            return Index(monitorEditViewModel.MonitorId, monitorEditViewModel);
         }
     }
 }
