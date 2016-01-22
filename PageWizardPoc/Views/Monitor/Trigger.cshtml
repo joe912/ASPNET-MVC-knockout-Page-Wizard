@@ -1,0 +1,24 @@
+﻿@using Newtonsoft.Json
+@model PageWizardPoc.Models.MonitorEditViewModel
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Trigger page.</p>
+
+@using (Html.BeginForm("Index", null, FormMethod.Get, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        <label for="MonitorName">Monitor Name</label>
+        @Html.TextBoxFor(model => model.MonitorName, new { @class = "form-control" })
+    </div>
+
+    @Html.HiddenFor(model => model.MonitorId)
+    @Html.HiddenFor(model => model.EditingTriggerOrAlert)
+    @Html.Hidden("Triggers", JsonConvert.SerializeObject(Model.Triggers))
+
+    <button type="submit" class="btn btn-default" id="EditMeterMonitorModelSubmit">Save Trigger ...</button>
+}
